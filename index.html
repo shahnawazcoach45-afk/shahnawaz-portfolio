@@ -1,0 +1,192 @@
+<!-- 2026-11-04 — Public portfolio page (single page). Content is rendered by js/site.js. -->
+<!-- 2026-11-17 — Plain scripts (opens by double-click), real CV details, Experience/Achievements sections, inline videos. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shahnawaz Khan — Swimming Head Coach</title>
+  <meta name="description" content="Swimming lessons for kids, adult beginners and competitive swimmers with Coach Shahnawaz Khan, 13+ years of experience in Aligarh and Gurgaon. Learn-to-swim, stroke correction, school and corporate programs.">
+  <meta name="theme-color" content="#0A2540">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Shahnawaz Khan — Swimming Head Coach">
+  <meta property="og:description" content="Learn to swim with confidence — kids, adults and competitive swimmers.">
+  <meta property="og:image" content="assets/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/seed/kids-01.webp" fetchpriority="high">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/config.js" defer></script>
+  <script src="data/seed.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/gallery.js" defer></script>
+  <script src="js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">≈</span><span data-bind="name">Shahnawaz Khan</span></a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <nav id="nav-links" class="nav-links" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#videos">Videos</a>
+      <a href="#contact">Contact</a>
+      <a class="btn btn-sm" data-wa href="#contact">Book a Session</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home">
+      <img class="hero-img" id="hero-img" src="assets/seed/kids-01.webp" alt="Coach Shahnawaz teaching a kids' swimming batch" fetchpriority="high">
+      <div class="hero-shade"></div>
+      <div class="hero-content container">
+        <p class="eyebrow" data-bind="title">Swimming Head Coach</p>
+        <h1 class="hero-title"><span>Coach</span> <span data-bind="name">Shahnawaz Khan</span></h1>
+        <p class="hero-tagline" data-bind="tagline"></p>
+        <div class="hero-cta">
+          <a class="btn" data-wa href="#contact">Book a Session</a>
+          <a class="btn btn-ghost" href="#gallery">View Gallery</a>
+        </div>
+      </div>
+      <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 64c120-32 240-48 360-32s240 64 360 64 240-48 360-64 240 0 360 32v56H0z"/></svg>
+    </section>
+
+    <section class="stats" aria-label="Highlights in numbers">
+      <div class="container stats-grid" id="stats"></div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about">
+        <figure class="about-photo reveal">
+          <img id="about-img" src="assets/seed/coaching-01.webp" alt="Coach Shahnawaz at the poolside" loading="lazy">
+        </figure>
+        <div class="reveal">
+          <p class="eyebrow">About the coach</p>
+          <h2 class="section-title">Safety first. <span class="accent">Technique always.</span></h2>
+          <div class="about-bio" id="bio"></div>
+          <h3 class="sub-title">Certifications</h3>
+          <ul class="cert-list" id="certs"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="experience">
+      <div class="container">
+        <p class="eyebrow center">Career</p>
+        <h2 class="section-title center">Coaching Experience</h2>
+        <div class="timeline" id="timeline"></div>
+        <div class="edu" id="edu-block">
+          <h3 class="sub-title">Education</h3>
+          <ul class="edu-list" id="edu-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="achievements">
+      <div class="container">
+        <p class="eyebrow center">Proof of work</p>
+        <h2 class="section-title center">Achievements &amp; Certificates</h2>
+        <ul class="ach-list" id="ach-list"></ul>
+        <div class="proof-grid" id="proof-grid"></div>
+        <div class="center"><button class="btn btn-outline" id="proof-more" hidden>Show more</button></div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="programs">
+      <div class="container">
+        <p class="eyebrow center">What I teach</p>
+        <h2 class="section-title center">Programs for every swimmer</h2>
+        <div class="programs" id="program-list"></div>
+      </div>
+    </section>
+
+    <section class="section celebs" id="celebrities" hidden>
+      <div class="container">
+        <p class="eyebrow center gold">Notable moments</p>
+        <h2 class="section-title center">Celebrity &amp; Notable Moments</h2>
+        <div class="celeb-grid" id="celeb-grid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="gallery">
+      <div class="container">
+        <p class="eyebrow center">In the water</p>
+        <h2 class="section-title center">Gallery</h2>
+        <div class="tabs" id="gallery-tabs" role="tablist" aria-label="Gallery categories"></div>
+        <div class="masonry" id="gallery-grid"></div>
+        <div class="center"><button class="btn btn-outline" id="gallery-more" hidden>Load more</button></div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="videos">
+      <div class="container">
+        <p class="eyebrow center">Watch</p>
+        <h2 class="section-title center">Coaching in Action</h2>
+        <div class="video-grid" id="video-grid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="venues">
+      <div class="container center">
+        <p class="eyebrow">Where I've coached</p>
+        <h2 class="section-title">Venues &amp; Associations</h2>
+        <ul class="chips" id="venue-list"></ul>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="testimonials" hidden>
+      <div class="container">
+        <p class="eyebrow center">Kind words</p>
+        <h2 class="section-title center">What swimmers say</h2>
+        <div class="quotes" id="quote-list"></div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container contact">
+        <div class="reveal">
+          <p class="eyebrow">Get in touch</p>
+          <h2 class="section-title">Book your first session</h2>
+          <ul class="contact-list" id="contact-list"></ul>
+          <div class="map" id="map"></div>
+        </div>
+        <form class="card form reveal" id="enquiry">
+          <h3>Send an enquiry on WhatsApp</h3>
+          <label>Name<input name="name" required autocomplete="name"></label>
+          <label>Phone<input name="phone" type="tel" autocomplete="tel"></label>
+          <label>Program
+            <select name="program" id="program-select"></select>
+          </label>
+          <label>Message<textarea name="message" rows="3" placeholder="Age of swimmer, preferred timing, location…"></textarea></label>
+          <button class="btn" type="submit">Send on WhatsApp</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p><strong data-bind="name">Shahnawaz Khan</strong> · <span data-bind="title">Swimming Head Coach</span></p>
+      <p>© <span id="year"></span> All rights reserved.</p>
+    </div>
+  </footer>
+
+  <a class="wa-float" data-wa href="#contact" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg>
+  </a>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+    <button class="lb-close" aria-label="Close">×</button>
+    <button class="lb-nav lb-prev" aria-label="Previous photo">‹</button>
+    <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+    <button class="lb-nav lb-next" aria-label="Next photo">›</button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!-- 2026-11-04 — Admin panel: login, media manager (upload/edit/reorder/delete), profile editor. Logic in js/admin.js. -->
+<!-- 2026-11-17 — Loads plain data scripts first; added Experience, Education and Achievements fields; video uploads MP4/WebM only. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin — Coach Portfolio</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css">
+  <script src="../js/config.js"></script>
+  <script src="../data/seed.js"></script>
+  <script src="../js/data.js"></script>
+  <script type="module" src="../js/admin.js"></script>
+</head>
+<body>
+  <!-- Shown when js/config.js has no Supabase keys -->
+  <section class="center-card" id="setup" hidden>
+    <h1>Admin not connected yet</h1>
+    <p>Add your Supabase URL and anon key in <code>js/config.js</code>, then reload this page. Steps are in <code>README.md</code>.</p>
+    <a class="btn" href="../">View website</a>
+  </section>
+
+  <section class="center-card" id="login" hidden>
+    <h1>Admin login</h1>
+    <form id="login-form" class="form">
+      <label>Email<input name="email" type="email" required autocomplete="username"></label>
+      <label>Password<input name="password" type="password" required autocomplete="current-password"></label>
+      <button class="btn" type="submit">Log in</button>
+      <p class="msg" id="login-msg" role="alert"></p>
+    </form>
+  </section>
+
+  <div id="app" hidden>
+    <header class="top">
+      <strong class="logo">Coach Admin</strong>
+      <nav class="tabs" role="tablist">
+        <button class="tab" role="tab" data-tab="media" aria-selected="true">Media</button>
+        <button class="tab" role="tab" data-tab="profile" aria-selected="false">Profile</button>
+      </nav>
+      <div class="top-actions">
+        <a class="link" href="../" target="_blank" rel="noopener">View site ↗</a>
+        <button class="link" id="logout">Log out</button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <!-- MEDIA -->
+      <section id="tab-media">
+        <label class="drop" id="drop">
+          <input type="file" id="file-input" accept="image/*,video/mp4,video/webm" multiple hidden>
+          <strong>Tap to choose photos/videos</strong>
+          <span>or drag &amp; drop here · photos are compressed to WebP automatically · videos: MP4 only, under 50 MB</span>
+        </label>
+        <ul class="queue" id="queue"></ul>
+
+        <div class="toolbar">
+          <input type="search" id="search" placeholder="Search captions or names…" aria-label="Search">
+          <select id="filter" aria-label="Filter by category"><option value="">All categories</option></select>
+          <button class="btn btn-light" id="import-seed">Import seed photos</button>
+        </div>
+        <p class="hint" id="count"></p>
+        <div class="grid" id="grid"></div>
+      </section>
+
+      <!-- PROFILE -->
+      <section id="tab-profile" hidden>
+        <form id="profile-form" class="form profile">
+          <fieldset>
+            <legend>Basics</legend>
+            <label>Name<input name="name" required></label>
+            <label>Title<input name="title"></label>
+            <label>Tagline<input name="tagline"></label>
+            <label>Bio <small>(blank line = new paragraph)</small><textarea name="bio" rows="6"></textarea></label>
+          </fieldset>
+          <fieldset>
+            <legend>Images</legend>
+            <div class="pick">
+              <label>Hero image<select name="hero_path" data-preview="hero-prev"></select></label>
+              <img id="hero-prev" alt="">
+            </div>
+            <div class="pick">
+              <label>About image<select name="about_path" data-preview="about-prev"></select></label>
+              <img id="about-prev" alt="">
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Numbers &amp; lists</legend>
+            <label>Stats <small>(one per line: value | suffix | label)</small><textarea name="stats" rows="4"></textarea></label>
+            <label>Certifications <small>(one per line)</small><textarea name="certifications" rows="4"></textarea></label>
+            <label>Experience <small>(one per line: role | organisation, city | period | details)</small><textarea name="experience" rows="6"></textarea></label>
+            <label>Education <small>(one per line: degree | school | year)</small><textarea name="education" rows="4"></textarea></label>
+            <label>Achievements <small>(one per line)</small><textarea name="achievements" rows="6"></textarea></label>
+            <label>Programs <small>(one per line: title | description)</small><textarea name="programs" rows="6"></textarea></label>
+            <label>Venues &amp; associations <small>(one per line)</small><textarea name="venues" rows="5"></textarea></label>
+            <label>Testimonials <small>(one per line: quote | name | role)</small><textarea name="testimonials" rows="5"></textarea></label>
+          </fieldset>
+          <fieldset>
+            <legend>Contact</legend>
+            <label>Phone<input name="contact.phone"></label>
+            <label>WhatsApp number <small>(country code + number, digits only, e.g. 919876543210)</small><input name="contact.whatsapp" inputmode="numeric"></label>
+            <label>Email<input name="contact.email" type="email"></label>
+            <label>Instagram URL<input name="contact.instagram" type="url"></label>
+            <label>Location<input name="contact.location"></label>
+            <label>Google Maps embed URL <small>(Maps → Share → Embed a map → copy the src="…" link)</small><input name="contact.map_embed" type="url"></label>
+          </fieldset>
+          <div class="sticky-save"><button class="btn" type="submit">Save profile</button><span class="msg" id="profile-msg" role="status"></span></div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="edit">
+    <form class="form" id="edit-form">
+      <img id="edit-prev" alt="">
+      <label>Caption<input name="caption"></label>
+      <label>Category<select name="category"></select></label>
+      <label class="check"><input type="checkbox" name="is_featured"> Featured (shows in Highlights)</label>
+      <label class="check"><input type="checkbox" name="is_celebrity"> Celebrity / notable moment</label>
+      <label>Celebrity name<input name="celebrity_name" placeholder="Shown in gold on the website"></label>
+      <label>Replace file<input type="file" name="replace" accept="image/*,video/mp4,video/webm"></label>
+      <p class="msg" id="edit-msg" role="status"></p>
+      <div class="row">
+        <button class="btn btn-danger" type="button" id="edit-delete">Delete</button>
+        <span class="spacer"></span>
+        <button class="btn btn-light" type="button" id="edit-cancel">Cancel</button>
+        <button class="btn" type="submit" id="edit-save">Save</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
